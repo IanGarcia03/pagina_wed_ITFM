@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instituto Técnico Francisco Miranda</title>
+    <style>
+        /* Responsividad del encabezado */
+        @media (max-width: 992px) {
+            header {
+                padding: 10px 30px;
+            }
+
+            .logo img {
+                height: 60px;
+                /* Logo más pequeño */
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                /* Para que no se rompa si falta espacio */
+                justify-content: space-between;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 45px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+
+            .cart-container {
+                margin-left: 10px;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fffdfd;
+        }
+
+        /* Estilos para el encabezado */
+        header {
+            background-color: #d5d6da;
+            padding: 0px 60px;
+            /* MÁS DELGADO */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            background-color: orange;
+            color: white;
+        }
+
+        /* Menú desplegable */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #5a5a5a;
+            min-width: 180px;
+            padding: 10px 0;
+            border-radius: 5px;
+            z-index: 20;
+        }
+
+        .dropdown-menu li {
+            padding: 8px 20px;
+        }
+
+        .dropdown-menu li a {
+            color: white;
+            font-size: 14px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #003366;
+        }
+
+        /* Carrito de compras */
+        .cart-container {
+            position: relative;
+            margin-left: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+
+        /* iconos de apps */
+
+        .social-bar {
+            position: fixed;
+            top: 40%;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .social-bar a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: #000;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+
+        /* NUEVA SECCIÓN DE BLOGS */
+        .blog-section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .blog-section h2 {
+            color: #003366;
+            font-weight: bold;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .blog-section hr {
+            width: 80px;
+            border: 2px solid #003366;
+            margin-bottom: 20px;
+        }
+
+        .blog-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .blog-main {
+            flex: 2;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-main img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-main h3 {
+            margin: 15px;
+            color: #003366;
+        }
+
+        .blog-main p {
+            margin: 0 15px 10px 15px;
+            color: #555;
+        }
+
+        .blog-main a {
+            display: inline-block;
+            margin: 0 15px 15px 15px;
+            color: #972516;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .blog-main a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blogs laterales */
+        .blog-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .blog-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            color: #fff;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .blog-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .blog-item:hover {
+            filter: brightness(0.9);
+        }
+
+        /* Colores como en tu ejemplo */
+        .blog-item.blue {
+            background-color: #7e1a1ad5;
+        }
+
+        .blog-item.teal {
+            background-color: #cac02c;
+        }
+
+        .blog-item.red {
+            background-color: #203697;
+        }
+
+        /* ESTILOS ADICIONALES PARA LA OFERTA ACADÉMICA */
+        .oferta-container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 8px;
+        }
+
+        .oferta-container h1 {
+            color: #003366;
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            margin-bottom: 25px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+        }
+
+        .carrera-card {
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: #fdfdfd;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .carrera-info {
+            max-width: 75%;
+        }
+
+        .carrera-info h2 {
+            margin: 0 0 10px 0;
+            color: #003366;
+            font-size: 18px;
+        }
+
+        .carrera-info p {
+            margin: 3px 0;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .modalidad span {
+            display: inline-block;
+            background: #003366;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-right: 6px;
+        }
+
+        .modalidad span.virtual {
+            background: #ff6600;
+        }
+
+        .btn-plan {
+            border: 2px solid #003366;
+            background: white;
+            padding: 8px 14px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            color: #003366;
+        }
+
+        .btn-plan:hover {
+            background: #003366;
+            color: white;
+        }
+
+        /* Banner Azul Oferta Académica */
+        .banner-oferta {
+            background-color: #1f3667;
+            /* Azul oscuro similar al de UNAH */
+            padding: 30px 60px;
+            border-bottom: 3px solid #f2c200;
+            /* Línea amarilla inferior */
+            color: white;
+        }
+
+        .banner-oferta p {
+            margin: 0;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .banner-oferta h1 {
+            margin: 5px 0 0 0;
+            font-size: 26px;
+            font-weight: bold;
+            color: #f2c200;
+            /* Amarillo */
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <a href="presentacion.html">
+                <img src="img/Diseño sin título.jpg" alt="Logo Instituto Técnico Francisco Miranda" />
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="inicio.html">Portal ITFM</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sobre_igtfm.html">Sobre el ITFM</a></li>
+                        <li><a href="clases.html">Clases</a></li>
+                        <li><a href="talleres.html">Talleres</a></li>
+                        <li><a href="banda_musical.html">Banda Musical</a></li>
+                        <li><a href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </li>
+                <li><a href="oferta_academica.html">Oferta académica</a></li>
+                <li><a href="personal.html">Autoridades Institucionales</a></li>
+                <li><a href="estudiantes.html">Estudiantes</a></li>
+                <li><a href="inscripcion.html">Inscripción</a></li>
+                <li><a href="comentarios.html">Comentarios</a></li>
+                <li><a href="compras.html">Compras</a></li>
+                <div class="cart-container" onclick="addToCart()">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    <!-- SECCIÓN AZUL DE TÍTULO -->
+    <div class="banner-oferta">
+        <div class="banner-content">
+            <p>Portal ITFM /</p>
+            <h1>OFERTA ACADÉMICA</h1>
+        </div>
+    </div>
+
+    <!-- CONTENIDO OFERTA ACADÉMICA -->
+    <div class="oferta-container">
+
+        <!-- SEPTIMO-->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Septimo Grado</h2>
+                <p><b>Grado:</b> Septimo Grado</p>
+                <p class="modalidad"><b>Modalidad:</b>
+                    <span>Presencial</span> <span class="virtual">Matutino</span>
+                    <span class="virtual">Vespertina</span>
+                </p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+
+        </div>
+
+        <!-- OCTAVO -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Octavo Grado</h2>
+                <p><b>Grado:</b> Octavo Grado</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual">Matutino</span>
+                    <span class="virtual">Vespertina</span>
+                </p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+
+        <!-- NOVENO -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Noveno Grado</h2>
+                <p><b>Grado:</b> Noveno Grado</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span><span class="virtual">Matutino</span>
+                    <span class="virtual">Vespertina</span>
+                </p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+
+        <!-- DECIMO DE FINANZAS -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Decimo Grado de Contaduria y Finanzas</h2>
+                <p><b>Grado:</b> Decimo de Contaduria y Finanzas</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span><span class="virtual">Matutino</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+
+        <!-- DECIMO DE INFORMATICA -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Decimo Grado de Informatica</h2>
+                <p><b>Grado:</b> Decimo de Informatica</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual">Vespertino</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+
+        <!-- DECIMO DE AGROINDUSTRIA -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Decimo Grado de Agroindustria</h2>
+                <p><b>Grado:</b> Decimo de Agroindustria</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual">Vespertino</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+        <!-- ONCEAVO DE FINANZAS -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Onceavo Grado de Contaduria y Finanzas</h2>
+                <p><b>Grado:</b> Onceavo de Contaduria y Finanzas</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual">Matutino</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+
+        <!-- ONCEAVO DE INFORMATICA -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Onceavo Grado de Informatica</h2>
+                <p><b>Grado:</b> Onceavo de Informatica</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual">Vespertina</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+
+        <!-- ONCEAVO DE AGROINDUSTRIA -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Onceavo Grado de Agroindustria</h2>
+                <p><b>Grado:</b> Onceavo de Agroindustria</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual">Vespertina</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+        <!-- DOCEAVO DE FINANZAS -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Doceavo Grado de Contaduria y Finanzas</h2>
+                <p><b>Grado:</b> Licenciatura</p>
+                <p><b>Facultad:</b> Ciencias Sociales</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual">Matutino</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+
+        <!-- DOCEAVO DE INFORMATICA -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Doceavo Grado de Informatica</h2>
+                <p><b>Grado:</b> Doceavo de Informatica</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual">Vespertina</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+
+        <!-- DOCEAVO DE AGROINDUSTRIA -->
+        <div class="carrera-card">
+            <div class="carrera-info">
+                <h2>Doceavo Grado de Agroindustria</h2>
+                <p><b>Grado:</b>Doceavo de Agroindustria</p>
+                <p class="modalidad"><b>Modalidad:</b> <span>Presencial</span> <span class="virtual ">Vespertina</span></p>
+                <p><b>Duración:</b> 1 años</p>
+            </div>
+            <a href="inscripcion.html">
+                <button class="btn-plan">INSCRIBIRSE</button>
+            </a>
+        </div>
+    </div>
+
+
+    <!-- SECCIÓN BLOG -->
+    <div class="blog-section">
+        <h2>Artículos del blog</h2>
+        <hr>
+
+        <div class="blog-container">
+
+            <!-- Blog grande a la izquierda -->
+            <div class="blog-main">
+                <img src="img/agro,universidad.jpg" alt="Blog principal">
+                <h3>El IGTFM y su compromiso con la agroindustria</h3>
+                <p>Los jóvenes del bachillerato en Agroindustria del Instituto Técnico Francisco Miranda han iniciado su
+                    etapa de pasantía profesional en distintas áreas agrícolas de la región.</p>
+            </div>
+
+            <!-- Blogs pequeños a la derecha -->
+            <div class="blog-side">
+                <div class="blog-item blue">
+                    <img src="img/catedra.jpg" alt="Blog 2">
+                    <p>Jóvenes de último de bachillerato participan en cátedra Morazánica</p>
+
+                </div>
+                <div class="blog-item teal">
+                    <img src="img/bandacompe.jpg" alt="Blog 3">
+                    <p>IGTFM reconoce con Galardón al Mérito a estudiantes próximos a egresar</p>
+                </div>
+                <div class="blog-item red">
+                    <img src="img/futbolMujeres.jpg" alt="Blog 4">
+                    <p>IGTFM Cortés culminará Comedor, Estancia Infantil y Coworking este octubre</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Barra social -->
+    <div class="social-bar">
+        <a href="https://www.facebook.com/InstitutoTecnicoFranciscoMiranda" title="Facebook">f</a>
+        <a href="https://twitter.com/InstitutoFranciscoMiranda" title="X">X</a>
+        <a href="https://www.instagram.com/InstitutoFranciscoMiranda" title="Instagram">📷</a>
+        <a href="https://www.youtube.com/InstitutoFranciscoMiranda" title="YouTube">▶</a>
+        <a href="https://www.tiktok.com/@InstitutoFranciscoMiranda" title="TikTok">🎵</a>
+    </div>
+
+    <!-- Imagen de pie de página -->
+    <img src="img/pie de pagina.png" alt="" style="width: 100%">
+
+    <!-- Pie de página -->
+    <footer>
+        &copy; 2025 Instituto Técnico Francisco Miranda. Todos los derechos reservados.
+
+    </footer>
+
+    <script>
+        // Contadores animados
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / 200;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+
+        // Función carrito (ejemplo simple)
+        let cartCount = 0;
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instituto Técnico Francisco Miranda</title>
+    <style>
+        /* Responsividad del encabezado */
+        @media (max-width: 992px) {
+            header {
+                padding: 10px 30px;
+            }
+
+            .logo img {
+                height: 60px;
+                /* Logo más pequeño */
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                /* Para que no se rompa si falta espacio */
+                justify-content: space-between;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 45px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+
+            .cart-container {
+                margin-left: 10px;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fffdfd;
+        }
+
+        /* Estilos para el encabezado */
+        header {
+            background-color: #d5d6da;
+            padding: 0px 60px;
+            /* MÁS DELGADO */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            background-color: orange;
+            color: white;
+        }
+
+        /* Menú desplegable */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #5a5a5a;
+            min-width: 180px;
+            padding: 10px 0;
+            border-radius: 5px;
+            z-index: 20;
+        }
+
+        .dropdown-menu li {
+            padding: 8px 20px;
+        }
+
+        .dropdown-menu li a {
+            color: white;
+            font-size: 14px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #003366;
+        }
+
+        /* Carrito de compras */
+        .cart-container {
+            position: relative;
+            margin-left: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+
+        /* iconos de apps */
+
+        .social-bar {
+            position: fixed;
+            top: 40%;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .social-bar a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: #000;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+
+        /* NUEVA SECCIÓN DE BLOGS */
+        .blog-section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .blog-section h2 {
+            color: #003366;
+            font-weight: bold;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .blog-section hr {
+            width: 80px;
+            border: 2px solid #003366;
+            margin-bottom: 20px;
+        }
+
+        .blog-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .blog-main {
+            flex: 2;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-main img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-main h3 {
+            margin: 15px;
+            color: #003366;
+        }
+
+        .blog-main p {
+            margin: 0 15px 10px 15px;
+            color: #555;
+        }
+
+        .blog-main a {
+            display: inline-block;
+            margin: 0 15px 15px 15px;
+            color: #972516;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .blog-main a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blogs laterales */
+        .blog-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .blog-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            color: #fff;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .blog-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .blog-item:hover {
+            filter: brightness(0.9);
+        }
+
+        /* Colores como en tu ejemplo */
+        .blog-item.blue {
+            background-color: #7e1a1ad5;
+        }
+
+        .blog-item.teal {
+            background-color: #cac02c;
+        }
+
+        .blog-item.red {
+            background-color: #203697;
+        }
+
+        /* Banner Azul Oferta Académica */
+        .banner-oferta {
+            background-color: #1f3667;
+            /* Azul oscuro similar al de UNAH */
+            padding: 30px 60px;
+            border-bottom: 3px solid #f2c200;
+            /* Línea amarilla inferior */
+            color: white;
+        }
+
+        .banner-oferta p {
+            margin: 0;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .banner-oferta h1 {
+            margin: 5px 0 0 0;
+            font-size: 26px;
+            font-weight: bold;
+            color: #f2c200;
+            /* Amarillo */
+        }
+
+        .antecedentes {
+            text-align: center;
+            margin: 40px auto;
+            max-width: 1000px;
+        }
+
+        .antecedentes h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #002b5c;
+            position: relative;
+        }
+
+        .accordion {
+            text-align: left;
+        }
+
+        .accordion-item {
+            border: 1px solid #002b5c;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background-color: #fff;
+            color: #002b5c;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 18px;
+            position: absolute;
+            right: 20px;
+        }
+
+        .accordion-header.active::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: #f9f9f9;
+            padding: 0 15px;
+        }
+
+        .accordion-content p {
+            margin: 30px 0;
+        }
+
+        /* NUEVOS CUADROS debajo de contadores */
+        .study-links {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin: 20px 60px 60px 60px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fffdfd;
+            padding: 0 80px;
+
+        }
+
+        .study-box {
+            flex: 1 1 90px;
+            height: 200px;
+            color: #003366;
+            font-weight: bold;
+            font-size: 20px;
+            font-family: 'Arial Black', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 0;
+            transition: background-color 0.3s ease;
+            position: relative;
+            padding: 0 10px;
+        }
+
+        .study-box span {
+            z-index: 2;
+            position: relative;
+            line-height: 1.2;
+        }
+
+        .study-box.oferta {
+            background: linear-gradient(135deg, #972516 50%, #b12c1b 50%);
+            color: white;
+        }
+
+        .study-box.admisiones {
+            background: linear-gradient(135deg, #c19e5c 50%, #f6b85c 50%);
+            color: #003366;
+        }
+
+        .study-box.registro {
+            background: linear-gradient(135deg, #972516 50%, #b12c1b 50%);
+            color: white;
+        }
+
+        .study-box.preguntas {
+            background: linear-gradient(135deg, #c19e5c 50%, #f6b85c 50%);
+            color: #003366;
+        }
+
+        .study-box:hover {
+            filter: brightness(0.85);
+        }
+
+        .personal {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .personal h2 {
+            font-size: 28px;
+            color: #002b5c;
+            margin-bottom: 30px;
+        }
+
+        .cargo {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .cargo h3 {
+            font-size: 22px;
+            color: #972516;
+            margin-bottom: 20px;
+            border-left: 5px solid #002b5c;
+            padding-left: 10px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            flex: 1 1 220px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .card h4 {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #003366;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .personal {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .personal h2 {
+            font-size: 28px;
+            color: #002b5c;
+            margin-bottom: 30px;
+        }
+
+        /* Estilos acordeón */
+        .accordion-item {
+            border: 1px solid #002b5c;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background-color: #fff;
+            color: #002b5c;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 18px;
+            position: absolute;
+            right: 20px;
+            transition: transform 0.3s;
+        }
+
+        .accordion-header.active::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.3s ease;
+            background-color: #f9f9f9;
+            padding: 0 15px;
+        }
+
+        .accordion-content.open {
+            padding: 15px;
+        }
+
+        /* Cards */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            flex: 1 1 220px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .card h4 {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #003366;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <a href="presentacion.html">
+                <img src="img/Diseño sin título.jpg" alt="Logo Instituto Técnico Francisco Miranda" />
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="inicio.html">Portal ITFM</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sobre_igtfm.html">Sobre el ITFM</a></li>
+                        <li><a href="clases.html">Clases</a></li>
+                        <li><a href="talleres.html">Talleres</a></li>
+                        <li><a href="banda_musical.html">Banda Musical</a></li>
+                        <li><a href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </li>
+                <li><a href="oferta_academica.html">Oferta académica</a></li>
+                <li><a href="personal.html">Autoridades Institucionales</a></li>
+                <li><a href="estudiantes.html">Estudiantes</a></li>
+                <li><a href="inscripcion.html">Inscripción</a></li>
+                <li><a href="comentarios.html">Comentarios</a></li>
+                <li><a href="compras.html">Compras</a></li>
+                <div class="cart-container" onclick="addToCart()">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    <!-- SECCIÓN AZUL DE TÍTULO -->
+    <div class="banner-oferta">
+        <div class="banner-content">
+            <p>Portal ITFM /</p>
+            <h1>AUTORIDADES INSTITUCIONALES</h1>
+        </div>
+    </div>
+    <!-- SECCIÓN DE PERSONAL -->
+    <section class="personal">
+        <h2>Autoridades y Personal</h2>
+
+        <!-- Dirección -->
+        <div class="accordion-item">
+            <button class="accordion-header">Dirección</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <img src="img/director juan .jpg" alt="Director">
+                        <h4>Juan Carlos Herrera Espinoza</h4>
+                        <p>Director de La Institución, es quien dicta las líneas generales de Administración y de
+                            gestión
+                            Institucional. Ex Docente del Colegio Jesús Aguilar Paz durante 20 años. Ex Docente de la
+                            Escuela Marco Carias Reyes durante 10 años.</p>
+                        <p>Títulos:
+                            <br>Maestro en Educación Primaria.
+                            <br>Licenciado en Matemáticas.
+                            <br>Maestro en Matemáticas Educativa.
+                        </p>
+                        <p>Actualmente cuenta con 18 años siendo el Director de la Institución.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Subdirección -->
+        <div class="accordion-item">
+            <button class="accordion-header">Subdirección</button>
+            <div class="accordion-content">
+                <div class="card">
+                    <img src="img/sub.juan.jpg" alt="Subdirector">
+                    <h4>Juan Andres Izaguirre Gonzales</h4>
+                    <p>Sustituye al Director en caso de ausencia, supervisar a los docentes y personal administrativo y
+                        servicio civil.</p>
+                    <p>Títulos:
+                        <br>Maestría en Educación Primaria.
+                        <br>Licenciado en Pedagogía y Ciencias de la Educación.
+                        <br>Pasante de la Carrera de Derecho.
+                    </p>
+                    <p>Actualmente cuenta con 5 años dentro de la institución.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secretaría y administración -->
+        <div class="accordion-item">
+            <button class="accordion-header">Secretaría y administración</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <img src="img/admin1.jpg" alt="Secretaria">
+                        <h4>Lesby Elieth Medina Agurcia</h4>
+                        <p>Secretaria General de La Institución es quien ayuda en la gestión administrativa y atención a
+                            estudiantes y padres de familia.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/secretaria1.jpg" alt="Secretaria">
+                        <h4>Nombre de la Secretaria</h4>
+                        <p>Brinda apoyo en la gestión documental y atención a estudiantes y padres de familia.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consejeros -->
+        <div class="accordion-item">
+            <button class="accordion-header">Consejeros</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <img src="img/profe junior.jpg" alt="consejero">
+                        <h4>Junior Josue Lopez Montes</h4>
+                        <p>Técnico Docente en el área de Consejería y Docente estricto.</p>
+                        <p>Títulos:
+                            <br>Licenciado en Ciencias Naturales.
+                            <br>Especialidad en Química y Física.
+                            <br>Diploma en Educación Superior
+                            <br>Actualmente cursando la carrera de Ingenieria Eléctrica.
+                            <br>Diploma en Electricista.
+                        </p>
+                        <p>Actualmente cuenta con 1 año dentro de la Institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe marlon.jpg" alt="consejero">
+                        <h4>Marlon Noel Izaguirre Velasquez</h4>
+                        <p>Jefe consejero de estudiantes, Docente en servicio estricto de Educación.</p>
+                        <p>Titulos:
+                            <br>Profesor de Educación media comercial en grado de licenciatura.
+                            <br>Diplomado en gestión, Dirección
+                            <br>Evaluación de instituciones educativas.
+                        </p>
+                        <p>Actualmente cuenta con 17 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe irma.jpg" alt="consejero">
+                        <h4>Irma Yolanda Erazo Lagos</h4>
+                        <p>Se desempeña en el área de Consejería para mantener el orden de los estudiantes.</p>
+                        <p>Títulos:
+                            <br>Licenciada en Pedagogía.
+                        </p>
+                        <p>Actualmente cuenta con 2 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe naum.jpg" alt="consejero">
+                        <h4>Jose Nahun Alvarez Alvarez</h4>
+                        <p>Se desempeña en el área de Consejería para mantener el orden de los estudiantes.</p>
+                        <p>Títulos:
+                            <br>Bachiller Técnico Industrial en Electricidad
+                            <br>Lic. en Ciencias Naturales.
+                        </p>
+                        <p>Actualmente cuenta con 5 meses dentro de la institución</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe leslie.jpg" alt="consejero">
+                        <h4>Irma Yolanda Erazo Lagos</h4>
+                        <p>Se desempeña en el área de Consejería para mantener el orden de los estudiantes.</p>
+                        <p>Títulos:
+                            <br>Licenciada en Pedagogía.
+                        </p>
+                        <p>Actualmente cuenta con 2 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe roy.jpg" alt="consejero">
+                        <h4>Roy Alejandro Rodriguez Pavón</h4>
+                        <p>Se desempeña en el área de Consejería para mantener el orden de los estudiantes.</p>
+                        <p>Títulos:
+                            <br>Bachillerato Técnico Profesional en Contaduría y Finanzas.
+                            <br>Pasante Universitario de la Carrera Ingenieria en Sistemas.
+                        </p>
+                        <p>Actualmente cuenta con 4 meses dentro de la institución.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Docentes -->
+        <div class="accordion-item">
+            <button class="accordion-header">Docentes</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <img src="img/wilmer Aguilar.jpg" alt="consejero">
+                        <h4>Wilmer Javier Aguilar Dominguez</h4>
+                        <p>Docente en la Carrera de Informática</p>
+                        <p>Títulos:
+                            <br>Licenciado en Informática educativa
+                            <br>Especialista en Robótica Avanzada
+                            <br>Técnico Universitario en Informática
+                            <br>Pasante Técnico Universitario en Desarrollo Web
+                        </p>
+                        <p>Actualmente cuenta con 18 años dentro de la institución</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe ana simons.jpg" alt="consejero">
+                        <h4>Ana Gabriela Simons Zelaya</h4>
+                        <p>Docente de Matemáticas en servicio estricto.</p>
+                        <p>Títulos:
+                            <br>Título de Educación media Bachillerato con Orientación en ciencias exactas en la escuela
+                            "ENMPN"
+                            <br>EN 2006 Profesora de Matemáticas en el grado de Licenciatura "UPNF" 2016
+                            <br>Diplomado en Educación Superior "UPNFM" 2009
+                        </p>
+                        <p>Actualmente cuenta con 3 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe fatima.jpg" alt="consejero">
+                        <h4>Fatima Yaneth Rodriguez</h4>
+                        <p>Docente estricto en las clases de Administración, Economía, Gestión Empresarial, Legislación
+                            Mercantil, Informática, Auditoría, Tes, Horas en Consejería</p>
+                        <p>Títulos:
+                            <br>Licenciada en Educación Comercial
+                        </p>
+                        <p>Actualmente cuenta con 18 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe celeste.jpg" alt="consejero">
+                        <h4>Celeste Maria Machuca Tejada</h4>
+                        <p>Docente de las clases: Ciencias Naturales. Química. Física. Biología.</p>
+                        <p>Títulos:
+                            <br>Maestra de Educación Primaria.
+                            <br>Licenciada en Ciencias Naturales con Orientación en Biología y Química.
+                            <br>Técnico en Alimentos.
+                        </p>
+                        <p>Actualmente cuenta con 7 años dentro de la institución.</p>
+                    </div>
+                    <!--ingeniera miriam le hace falta informacion-->
+                    <div class="card">
+                        <img src="img/ingeniera miriam.jpg" alt="consejero">
+                        <h4>Miriam Janeth Torres Castillo</h4>
+                        <p>Coordinadora Académica. Coordinadora de BTP Agroindustria.</p>
+                        <p>Títulos:
+                            <br>Licenciada en Pedagogía.
+                        </p>
+                        <p>Actualmente cuenta con 5 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe wendy.jpg" alt="consejero">
+                        <h4>Wendy Patricia Andino Amador</h4>
+                        <p>Docente de las clases: Sociología. Historia de Honduras. Ciencias sociales. Civíca.</p>
+                        <p>Títulos:
+                            <br>Maestra de Educación Primaria con Licenciatura en Ciencias Sociales
+                            <br> maestría en la enseñanza de la Geografía,
+                            <br>Maestría en Administración
+                            <br>Diplomado en La Vida y Obra de Francisco Morazán.
+                        </p>
+                        <p>Actualmente cuenta con 11 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe jenny.jpg" alt="consejero">
+                        <h4>Jenny Roseli Sosa Chavez</h4>
+                        <p>Docente estricto del área de Inglés.</p>
+                        <p>Títulos:
+                            <br>Perito Mercantil y Contador Público
+                            <br>Profesora de Educación Media en la enseñanza de Inglés en el grado de Licenciatura.
+                        </p>
+                        <p>Actualmente cuenta con 16 años y 6 meses dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe gavi.jpg" alt="consejero">
+                        <h4>Gabriela Arely Beltran Rodriguez</h4>
+                        <p>Docente de Educación Artística con Orientación en artes musicales en el grado de Licenciatura
+                        </p>
+                        <p>Títulos:
+                            <br>Maestra en Educación Primaria en Educación Músical.
+                        </p>
+                        <p>Actualmente cuenta con 1 año y 6 meses dentro de la Institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe manuel.jpg" alt="consejero">
+                        <h4>Jose Manuel Pineda Gamez</h4>
+                        <p>Director Artístico de la Banda Latina Francisco Miranda.</p>
+                        <p>Títulos:
+                            <br>Licenciado en Educación Artística.
+                            <br>Maestro de Educación Primaria en Educación Musical.
+                            <br>Pasante de la Maestría en Gestión Cultural.
+                        </p>
+                        <p>Actualmente cuenta con 12 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe mayra.jpg" alt="consejero">
+                        <h4>Mayra Alejandra Martinez Aguilar</h4>
+                        <p>Docente estricto en el área de Español.</p>
+                        <p>Títulos:
+                            <br>Licenciatura en Literatura
+                        </p>
+                        <p>Actualmente cuenta con 11 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe waleska.jpg" alt="consejero">
+                        <h4>Valeska Yamileth Mejía</h4>
+                        <p>Fue docente del taller de carpinteria el 1 de Mayo del 2009 hasta Noviembre del 22. El 1 de
+                            Febrero del 2023 hasta la fecha actual se le asignó el departamento de Orientación.
+                        </p>
+                        <p>Títulos:
+                            <br>Profesora de Educación Media en educación técnica Industrial.
+                        </p>
+                        <p>Actualmente cuenta con 16 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe fredy.jpg" alt="consejero">
+                        <h4>Fredis Armando Dominguez Medina</h4>
+                        <p>Docente en servicio estricto de Matemáticas y en el área de Administración.</p>
+                        <p>Títulos:
+                            <br>Licenciado en Ciencias Económicas. Licenciado en Matemáticas.
+                        </p>
+                        <p>Actualmente cuenta con 18 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/ingenireo luis.jpg" alt="consejero">
+                        <h4>Luis Eduardo Salgado Benitez</h4>
+                        <p>Docente en servicio estricto del área de Agronomía.</p>
+                        <p>Títulos:
+                            <br>Ingeniero Agrónomo.
+                            <br>Bachiller en Ciencias y Letras.
+                        </p>
+                        <p>Actualmente cuenta con 2 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe wilmer guevara.jpg" alt="consejero">
+                        <h4>Wilmer Alexis Guevara Cardenas</h4>
+                        <p>Docente de las clases de Ciencias Naturales, Biología, Química, Física, para alumnos de
+                            Décimo Grado.</p>
+                        <p>Títulos:
+                            <br>Licenciado en Ciencias Naturales con especialidad en Biología y Química.
+                        </p>
+                        <p>Actualmente cuenta con 17 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe santiago.jpg" alt="consejero">
+                        <h4>Santiago Humberto Funez Zuniga</h4>
+                        <p>Docente estricto de educación media en Educación Física.</p>
+                        <p>Títulos:
+                            <br>Perito Mercantil Contador Público
+                            <br>Profesor de educación media en Educación Física con el grado de licenciatura
+                        </p>
+                        <p>Actualmente cuenta con 19 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe enedas.jpg" alt="consejero">
+                        <h4>Enedas Alfonso Berrios Alvarado</h4>
+                        <p>Docente del Taller de Madera</p>
+                        <p>Títulos:
+                            <br>Maestro de Educación Primaria.
+                            <br>Bachiller en Educación.
+                            <br>Licenciado en Educación Básica.
+                            <br>Licenciado en Educación Técnica Industrial.
+                        </p>
+                        <p>Actualmente cuenta con 31 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe francis.jpg" alt="consejero">
+                        <h4>Francis Elizabeth Moncada Silva</h4>
+                        <p>Desarrolla el área de Nutrición, Taller de Hogar y Corte y Confección.</p>
+                        <p>Títulos:
+                            <br>Licenciada en Taller de Hogar en el Área de Nutrición y Alimentos.
+                        </p>
+                        <p>Actualmente cuenta con 20 años dentro de la institución.</p>
+                    </div>
+                    <!--- profe vanessa le hace falta mas información-->
+                    <div class="card">
+                        <img src="img/profe vanessa.jpg" alt="consejero">
+                        <h4>Vanessa Lizeth Galindo Velasquez</h4>
+                        <p>Docente del Taller de Estructuras Metálicas.</p>
+                        <p>Títulos:
+                            <br>
+                        </p>
+                        <p>Actualmente cuenta con 3 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe heydi.jpg" alt="consejero">
+                        <h4>Heydi Vanessa Gonzales Garcia</h4>
+                        <p>Docente del Taller de Corte y Confección</p>
+                        <p>Títulos:
+                            <br>Licenciada en Educación Técnica para el Hogar con Orientación en Salud y Nutrición.
+                        </p>
+                        <p>Actualmente cuenta con 2 años dentro de la institución.</p>
+                    </div>
+                    <!-- profe suyapa falta de foto e información -->
+                    <div class="card">
+                        <img src="img/profe suyapa.jpg" alt="consejero">
+                        <h4>Suyapa Janeth Pineda Lopez</h4>
+                        <p>Docente de las clases: Legislación Mercantil. Aduanas. Contaduría Costos. Informática Contaduría.</p>
+                        <p>Títulos:
+                            <br>
+                        </p>
+                        <p>Actualmente cuenta con 3 años dentro de la institución.</p>
+                    </div>
+                    <!-- profe Paz falta de foto e información -->
+                    <div class="card">
+                        <img src="img/profe Paz.jpg" alt="consejero">
+                        <h4>Maria De La Paz Alvarez Yanes</h4>
+                        <p>SDocente de las clases: Contaduría 1. Financiera. Contaduría 2. Administración Financiera.
+                            Tributaria. Contaduría Bancaria. Servicio al Cliente.</p>
+                        <p>Títulos:
+                            <br>
+                        </p>
+                        <p>Actualmente cuenta con 2 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe carlos.jpg" alt="consejero">
+                        <h4>Carlos Maldonado Servellon</h4>
+                        <p>Docente del Taller de Madera.</p>
+                        <p>Títulos:
+                            <br>Bachiller en Ciencias y Letras .
+                            <br>Pasante Universitario de la carrera de Técnico en Madera.
+                        </p>
+                        <p>Actualmente cuenta con 4 meses dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe fabricio.jpg" alt="consejero">
+                        <h4>Closvin Fabricio Yanez Santos</h4>
+                        <p>Docente del Taller de Estructuras Metálicas.</p>
+                        <p>Títulos:
+                            <br>Maestro de Educación Primaria.
+                            <br>Profesor en Educación Tecnológica con Orientación en Mecánica Industrial en el grado de
+                            Licenciatura.
+                            <br>Diplomado de formación Pedagógica en Educación Superior.
+                            <br>Maestría en Formulación, Gestión y Evaluación de Proyectos.
+                        </p>
+                        <p>Actualmente cuenta con 8 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe edwin.jpg" alt="consejero">
+                        <h4>Edwin Geovanny Raudales Lanza</h4>
+                        <p>Docente del Taller de Madera.</p>
+                        <p>Títulos:
+                            <br>Bachiller en Ciencias y Letras. 
+                            <br>Pasante de la Carrera de Educación Técnica Industrial con Orientación en Madera.
+                        </p>
+                        <p>Actualmente cuenta con 4 meses dentro de la institución.</p>
+                    </div>
+                    <!-- profe christian falta de foto e información -->
+                    <div class="card">
+                        <img src="img/profe christian.jpg" alt="consejero">
+                        <h4>Christian Obed Medina Alvarado</h4>
+                        <p>Docente de la clase de Dibujo Técnico.</p>
+                        <p>Títulos:
+                            <br>
+                        </p>
+                        <p>Actualmente cuenta con 3 años dentro de la institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/profe mario.jpg" alt="consejero">
+                        <h4>Mario Leonel Avila Maradiaga</h4>
+                        <p>Docente del área de Dibujo Técnico. Docente del Taller de Electricidad.</p>
+                        <p>Títulos:
+                            <br>Licenciado en Educación Tecnológica. 
+                            <br>Diplomado en Gestión Administrativa en centros educativos.
+                        </p>
+                        <p>Actualmente cuenta con 11 años dentro de la institución.</p>
+                    </div>
+                    <!-- profe rodyn falta de foto e información -->
+                    <div class="card">
+                        <img src="img/profe rodyn.jpg" alt="consejero">
+                        <h4>Rodyn Javier Figueroa Osorto</h4>
+                        <p>Docente del Taller de Madera.</p>
+                        <p>Títulos:
+                            <br>
+                        </p>
+                        <p>Actualmente cuenta con 3 años dentro de la institución.</p>
+                    </div>
+                    <!-- profe karen no quiso la foto e información -->
+                    <div class="card">
+                        <img src="img/profe karen.jpg" alt="consejero">
+                        <h4>Karen Leticia Sanchez Bautista</h4>
+                        <p>Docente de las clases:Ciencias sociales. Educación Cívica. Psicología. Filosofía.</p>
+                        <footer>Infromacion no disponible por derechos de autor</footer>
+                    </div>
+                    <!-- profe ana soto falta de foto e información -->
+                    <div class="card">
+                        <img src="img/profe ana soto.jpg" alt="consejero">
+                        <h4>Ana Liliam Soto Aguilera</h4>
+                        <p>Docente de la clase de Naturales.</p>
+                        <footer>Infromacion no disponible por derechos de autor</footer>
+                    </div>
+                    <!-- profe ada falta de foto e información -->
+                    <div class="card">
+                        <img src="img/profe ada.jpg" alt="consejero">
+                        <h4>Ada Lizeth Ordoñez Martinez</h4>
+                        <p>Docente de la clase de Español.</p>
+                      <footer>Infromacion no disponible por derechos de autor</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Aseo y Mantenimiento -->
+        <div class="accordion-item">
+            <button class="accordion-header">Aseo y Mantenimiento</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <img src="img/conserje juan.jpg" alt="Personal de Aseo">
+                        <h4>Juan Carlos Cruz Silva</h4>
+                        <p>Desempeña el cargo de conserje en el área de Vigilancia</p>
+                        <p>Actualmente cuenta con 25 años dentro de la Institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/doña nelsy.jpg" alt="Personal de Aseo">
+                        <h4>Nelcy Dinora Rapalo Vazques</h4>
+                        <p>Desempeña el cargo de conserje en el área de Aseo en toda la Institución.</p>
+                        <p>Actualmente cuenta con 14 años dentro de la Institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/walter .jpg" alt="Personal de Aseo">
+                        <h4>Walter José Acosta Calix</h4>
+                        <p>Desempeña el cargo de conserge en el área de vigilancia.</p>
+                        <p>Actualmente cuenta con 2 años dentro de la Institución.</p>
+                    </div>
+                    <div class="card">
+                        <img src="img/Susy.jpg" alt="Personal de Aseo">
+                        <h4>Susy</h4>
+                        <p>Desempeña el cargo de conserge en el área de vigilancia.</p>
+                        <p>Actualmente cuenta con 2 años dentro de la Institución.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- SECCIÓN BLOG -->
+    <div class="blog-section">
+        <h2>Artículos del blog</h2>
+        <hr>
+
+        <div class="blog-container">
+
+            <!-- Blog grande a la izquierda -->
+            <div class="blog-main">
+                <img src="img/agro,universidad.jpg" alt="Blog principal">
+                <h3>El IGTFM y su compromiso con la agroindustria</h3>
+                <p>Los jóvenes del bachillerato en Agroindustria del Instituto Técnico Francisco Miranda han iniciado su
+                    etapa de pasantía profesional en distintas áreas agrícolas de la región.</p>
+            </div>
+
+            <!-- Blogs pequeños a la derecha -->
+            <div class="blog-side">
+                <div class="blog-item blue">
+                    <img src="img/catedra.jpg" alt="Blog 2">
+                    <p>Jóvenes de último de bachillerato participan en cátedra Morazánica</p>
+
+                </div>
+                <div class="blog-item teal">
+                    <img src="img/bandacompe.jpg" alt="Blog 3">
+                    <p>IGTFM reconoce con Galardón al Mérito a estudiantes próximos a egresar</p>
+                </div>
+                <div class="blog-item red">
+                    <img src="img/futbolMujeres.jpg" alt="Blog 4">
+                    <p>IGTFM Cortés culminará Comedor, Estancia Infantil y Coworking este octubre</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra social -->
+    <div class="social-bar">
+        <a href="https://www.facebook.com/InstitutoTecnicoFranciscoMiranda" title="Facebook">f</a>
+        <a href="https://twitter.com/InstitutoFranciscoMiranda" title="X">X</a>
+        <a href="https://www.instagram.com/InstitutoFranciscoMiranda" title="Instagram">📷</a>
+        <a href="https://www.youtube.com/InstitutoFranciscoMiranda" title="YouTube">▶</a>
+        <a href="https://www.tiktok.com/@InstitutoFranciscoMiranda" title="TikTok">🎵</a>
+    </div>
+
+    <!-- Imagen de pie de página -->
+    <img src="img/pie de pagina.png" alt="" style="width: 100%">
+
+    <!-- Pie de página -->
+    <footer>
+        &copy; 2025 Instituto Técnico Francisco Miranda. Todos los derechos reservados.
+
+    </footer>
+
+    <script>
+        // Contadores animados
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / 200;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+
+        // Función carrito (ejemplo simple)
+        let cartCount = 0;
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+        }
+        // Script acordeón
+        document.querySelectorAll(".accordion-header").forEach(button => {
+            button.addEventListener("click", () => {
+                const accordionContent = button.nextElementSibling;
+
+                button.classList.toggle("active");
+
+                if (button.classList.contains("active")) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+                    accordionContent.style.padding = "15px";
+                } else {
+                    accordionContent.style.maxHeight = "0";
+                    accordionContent.style.padding = "0 15px";
+                }
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>

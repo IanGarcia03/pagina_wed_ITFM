@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instituto Técnico Francisco Miranda</title>
+    <style>
+        /* Responsividad del encabezado */
+        @media (max-width: 992px) {
+            header {
+                padding: 10px 30px;
+            }
+
+            .logo img {
+                height: 60px;
+                /* Logo más pequeño */
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                /* Para que no se rompa si falta espacio */
+                justify-content: space-between;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 45px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+
+            .cart-container {
+                margin-left: 10px;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fffdfd;
+        }
+
+        /* Estilos para el encabezado */
+        header {
+            background-color: #d5d6da;
+            padding: 0px 60px;
+            /* MÁS DELGADO */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            background-color: orange;
+            color: white;
+        }
+
+        /* Menú desplegable */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #5a5a5a;
+            min-width: 180px;
+            padding: 10px 0;
+            border-radius: 5px;
+            z-index: 20;
+        }
+
+        .dropdown-menu li {
+            padding: 8px 20px;
+        }
+
+        .dropdown-menu li a {
+            color: white;
+            font-size: 14px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #003366;
+        }
+
+        /* Carrito de compras */
+        .cart-container {
+            position: relative;
+            margin-left: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+
+        /* iconos de apps */
+
+        .social-bar {
+            position: fixed;
+            top: 40%;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .social-bar a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: #000;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+
+        /* NUEVA SECCIÓN DE BLOGS */
+        .blog-section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .blog-section h2 {
+            color: #003366;
+            font-weight: bold;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .blog-section hr {
+            width: 80px;
+            border: 2px solid #003366;
+            margin-bottom: 20px;
+        }
+
+        .blog-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .blog-main {
+            flex: 2;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-main img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-main h3 {
+            margin: 15px;
+            color: #003366;
+        }
+
+        .blog-main p {
+            margin: 0 15px 10px 15px;
+            color: #555;
+        }
+
+        .blog-main a {
+            display: inline-block;
+            margin: 0 15px 15px 15px;
+            color: #972516;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .blog-main a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blogs laterales */
+        .blog-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .blog-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            color: #fff;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .blog-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .blog-item:hover {
+            filter: brightness(0.9);
+        }
+
+        /* Colores como en tu ejemplo */
+        .blog-item.blue {
+            background-color: #7e1a1ad5;
+        }
+
+        .blog-item.teal {
+            background-color: #cac02c;
+        }
+
+        .blog-item.red {
+            background-color: #203697;
+        }
+
+        /* Banner Azul Oferta Académica */
+        .banner-oferta {
+            background-color: #1f3667;
+            /* Azul oscuro similar al de UNAH */
+            padding: 30px 60px;
+            border-bottom: 3px solid #f2c200;
+            /* Línea amarilla inferior */
+            color: white;
+        }
+
+        .banner-oferta p {
+            margin: 0;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .banner-oferta h1 {
+            margin: 5px 0 0 0;
+            font-size: 26px;
+            font-weight: bold;
+            color: #f2c200;
+            /* Amarillo */
+        }
+
+        .antecedentes {
+            text-align: center;
+            margin: 40px auto;
+            max-width: 1000px;
+        }
+
+        .antecedentes h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #002b5c;
+            position: relative;
+        }
+
+        .accordion {
+            text-align: left;
+        }
+
+        .accordion-item {
+            border: 1px solid #002b5c;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background-color: #fff;
+            color: #002b5c;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 18px;
+            position: absolute;
+            right: 20px;
+        }
+
+        .accordion-header.active::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: #f9f9f9;
+            padding: 0 15px;
+        }
+
+        .accordion-content p {
+            margin: 30px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <a href="presentacion.html">
+                <img src="img/Diseño sin título.jpg" alt="Logo Instituto Técnico Francisco Miranda" />
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="inicio.html">Portal ITFM</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sobre_igtfm.html">Sobre el ITFM</a></li>
+                        <li><a href="clases.html">Clases</a></li>
+                        <li><a href="talleres.html">Talleres</a></li>
+                        <li><a href="banda_musical.html">Banda Musical</a></li>
+                        <li><a href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </li>
+                <li><a href="oferta_academica.html">Oferta académica</a></li>
+                <li><a href="personal.html">Autoridades Institucionales</a></li>
+                <li><a href="estudiantes.html">Estudiantes</a></li>
+                <li><a href="inscripcion.html">Inscripción</a></li>
+                <li><a href="comentarios.html">Comentarios</a></li>
+                <li><a href="compras.html">Compras</a></li>
+                <div class="cart-container" onclick="addToCart()">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    <!-- SECCIÓN AZUL DE TÍTULO -->
+    <div class="banner-oferta">
+        <div class="banner-content">
+            <p>Portal ITFM /</p>
+            <h1>SOBRE EL ITFM</h1>
+        </div>
+    </div>
+    <!-- SECCIÓN DE ANTECEDENTES -->
+    <section class="antecedentes">
+        <h2>ANTECEDENTES</h2>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header">Primer Antecedente del Colegio</button>
+                <div class="accordion-content">
+                    <p>hubo actividad educativa previa (posiblemente desde ~1980 según algunas fuentes), pero la
+                        formalización institucional del Instituto Técnico “Francisco Miranda” parece documentarse
+                        oficialmente mediante el Acuerdo 7245 EP-87 del 30 de octubre de 1987.</p>
+                        <img src="img/imagen de presentacion1.jpg" alt="" style="width: 100%; border-radius: 10px; margin-top: 10px;">
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Fundación Oficial</button>
+                <div class="accordion-content">
+                    <p>El Instituto Técnico “Francisco Miranda” , con una larga y brillante trayectoria de ejecuciones
+                        en pro de la juventud hondureña, a través de mas de 20 años de existencia constituye el
+                        principal establecimiento de educación media en la comunidad de Zambrano.
+                        Nace a la vida institucional, a través del acuerdo 7245 EP-87 del 30 de Octubre de 1987; Inicio
+                        como Institución privado y a partir de 1995 es de carácter oficial.
+                        Fueron sus fundadores: Don German Martínez, Don Felicito Vargas, PM Ramón Alexis Hernández,
+                        Profa.: Elba Marina Urraco, Doña Elena Maradiaga y la Profa. Hilda Miranda; teniendo como
+                        cercanos colaboradores a Doña Azucena Vda. De Romero y Don Ramón Flores.</p>
+                        <img src="img/imagen de presentacion2.jpg" alt="" style="width: 100%; border-radius: 10px; margin-top: 10px;">
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Crecimiento Institucional</button>
+                <div class="accordion-content">
+                    <p>El crecimiento institucional del Instituto Técnico Francisco Miranda es un proceso integral que
+                        abarca la ampliación de la cobertura estudiantil, el fortalecimiento de su
+                        infraestructura con nuevas aulas, talleres y laboratorios, la mejora de la calidad académica
+                        mediante la capacitación docente y la incorporación de metodologías modernas, así como la
+                        diversificación de la oferta educativa con especialidades técnicas y programas complementarios.
+                        A ello se suma la obtención de reconocimientos oficiales, la consolidación de vínculos con la
+                        comunidad y el sector productivo, y el fortalecimiento de su gestión administrativa, todo lo
+                        cual ha permitido a la institución evolucionar y responder mejor a las necesidades formativas de
+                        su entorno.</p>
+                        <img src="img/areas verde.jpg" alt="" style="width: 100%; border-radius: 10px; margin-top: 10px;">
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Actualidad</button>
+                <div class="accordion-content">
+                    <p>Actualmente, el Instituto Técnico Francisco Miranda, ubicado en la aldea Zambrano, Francisco
+                        Morazán, continúa brindando formación a jóvenes de la comunidad, aunque enfrenta limitaciones de
+                        infraestructura y mobiliario. En 2023 recibió una donación de 100 pupitres por parte de la
+                        Alcaldía Municipal del Distrito Central, respuesta a la necesidad urgente de mejorar las
+                        condiciones en que los estudiantes recibían clases. Este hecho refleja que el colegio sigue
+                        activo, comprometido con la educación técnica, pero también que mantiene desafíos en cuanto a
+                        recursos y equipamiento para atender adecuadamente a su población estudiantil.</p>
+                        <img src="img/aulasmodernas.jpg" alt="" style="width: 100%; border-radius: 10px; margin-top: 10px;">
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- SECCIÓN DE FILOSOFIA DE LA INSTITUCION -->
+    <section class="antecedentes">
+        <h2>FILOSOFÍA DE LA INSTITUCIÓN</h2>
+
+        <div class="accordion">
+            <div class="accordion-item">
+                <button class="accordion-header">Mision Institucional</button>
+                <div class="accordion-content">
+                    <p>hubo actividad educativa previa (posiblemente desde ~1980 según algunas fuentes), pero la
+                        formalización institucional del Instituto Técnico “Francisco Miranda” parece documentarse
+                        oficialmente mediante el Acuerdo 7245 EP-87 del 30 de octubre de 1987.</p>
+                        <img src="img/imagen de presentacion1.jpg" alt="" style="width: 100%; border-radius: 10px; margin-top: 10px;">
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Visión Institucional</button>
+                <div class="accordion-content">
+                    <p>El Instituto Técnico “Francisco Miranda” , con una larga y brillante trayectoria de ejecuciones
+                        en pro de la juventud hondureña, a través de mas de 20 años de existencia constituye el
+                        principal establecimiento de educación media en la comunidad de Zambrano.
+                        Nace a la vida institucional, a través del acuerdo 7245 EP-87 del 30 de Octubre de 1987; Inicio
+                        como Institución privado y a partir de 1995 es de carácter oficial.
+                        Fueron sus fundadores: Don German Martínez, Don Felicito Vargas, PM Ramón Alexis Hernández,
+                        Profa.: Elba Marina Urraco, Doña Elena Maradiaga y la Profa. Hilda Miranda; teniendo como
+                        cercanos colaboradores a Doña Azucena Vda. De Romero y Don Ramón Flores.</p>
+                        <img src="img/imagen de presentacion2.jpg" alt="" style="width: 100%; border-radius: 10px; margin-top: 10px;">
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Principios y Valores Institucionales</button>
+                <div class="accordion-content">
+                    <p>El crecimiento institucional del Instituto Técnico Francisco Miranda es un proceso integral que
+                        abarca la ampliación de la cobertura estudiantil, el fortalecimiento de su
+                        infraestructura con nuevas aulas, talleres y laboratorios, la mejora de la calidad académica
+                        mediante la capacitación docente y la incorporación de metodologías modernas, así como la
+                        diversificación de la oferta educativa con especialidades técnicas y programas complementarios.
+                        A ello se suma la obtención de reconocimientos oficiales, la consolidación de vínculos con la
+                        comunidad y el sector productivo, y el fortalecimiento de su gestión administrativa, todo lo
+                        cual ha permitido a la institución evolucionar y responder mejor a las necesidades formativas de
+                        su entorno.</p>
+                        <img src="img/areas verde.jpg" alt="" style="width: 100%; border-radius: 10px; margin-top: 10px;">
+                </div>
+            </div>
+        </div>
+    </section>
+     <!-- SECCIÓN BLOG -->
+    <div class="blog-section">
+        <h2>Artículos del blog</h2>
+        <hr>
+
+        <div class="blog-container">
+
+            <!-- Blog grande a la izquierda -->
+            <div class="blog-main">
+                <img src="img/agro,universidad.jpg" alt="Blog principal">
+                <h3>El IGTFM y su compromiso con la agroindustria</h3>
+                <p>Los jóvenes del bachillerato en Agroindustria del Instituto Técnico Francisco Miranda han iniciado su
+                    etapa de pasantía profesional en distintas áreas agrícolas de la región.</p>
+            </div>
+
+            <!-- Blogs pequeños a la derecha -->
+            <div class="blog-side">
+                <div class="blog-item blue">
+                    <img src="img/catedra.jpg" alt="Blog 2">
+                    <p>Jóvenes de último de bachillerato participan en cátedra Morazánica</p>
+
+                </div>
+                <div class="blog-item teal">
+                    <img src="img/bandacompe.jpg" alt="Blog 3">
+                    <p>IGTFM reconoce con Galardón al Mérito a estudiantes próximos a egresar</p>
+                </div>
+                <div class="blog-item red">
+                    <img src="img/futbolMujeres.jpg" alt="Blog 4">
+                    <p>IGTFM Cortés culminará Comedor, Estancia Infantil y Coworking este octubre</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra social -->
+    <div class="social-bar">
+        <a href="https://www.facebook.com/InstitutoTecnicoFranciscoMiranda" title="Facebook">f</a>
+        <a href="https://twitter.com/InstitutoFranciscoMiranda" title="X">X</a>
+        <a href="https://www.instagram.com/InstitutoFranciscoMiranda" title="Instagram">📷</a>
+        <a href="https://www.youtube.com/InstitutoFranciscoMiranda" title="YouTube">▶</a>
+        <a href="https://www.tiktok.com/@InstitutoFranciscoMiranda" title="TikTok">🎵</a>
+    </div>
+
+    <!-- Imagen de pie de página -->
+    <img src="img/pie de pagina.png" alt="" style="width: 100%">
+
+    <!-- Pie de página -->
+    <footer>
+        &copy; 2025 Instituto Técnico Francisco Miranda. Todos los derechos reservados.
+
+    </footer>
+
+    <script>
+        // Contadores animados
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / 200;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+
+        // Función carrito (ejemplo simple)
+        let cartCount = 0;
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+        }
+        // Script acordeón
+        document.querySelectorAll(".accordion-header").forEach(button => {
+            button.addEventListener("click", () => {
+                const accordionContent = button.nextElementSibling;
+
+                button.classList.toggle("active");
+
+                if (button.classList.contains("active")) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+                    accordionContent.style.padding = "15px";
+                } else {
+                    accordionContent.style.maxHeight = "0";
+                    accordionContent.style.padding = "0 15px";
+                }
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>

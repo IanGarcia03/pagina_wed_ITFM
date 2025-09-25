@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instituto Técnico Francisco Miranda</title>
+    <style>
+        /* Responsividad del encabezado */
+        @media (max-width: 992px) {
+            header {
+                padding: 10px 30px;
+            }
+
+            .logo img {
+                height: 60px;
+                /* Logo más pequeño */
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                /* Para que no se rompa si falta espacio */
+                justify-content: space-between;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 45px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+
+            .cart-container {
+                margin-left: 10px;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fffdfd;
+        }
+
+        /* Estilos para el encabezado */
+        header {
+            background-color: #d5d6da;
+            padding: 0px 60px;
+            /* MÁS DELGADO */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            background-color: orange;
+            color: white;
+        }
+
+        /* Menú desplegable */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #5a5a5a;
+            min-width: 180px;
+            padding: 10px 0;
+            border-radius: 5px;
+            z-index: 20;
+        }
+
+        .dropdown-menu li {
+            padding: 8px 20px;
+        }
+
+        .dropdown-menu li a {
+            color: white;
+            font-size: 14px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #003366;
+        }
+
+        /* Carrito de compras */
+        .cart-container {
+            position: relative;
+            margin-left: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+        /* Otros estilos tuyos */
+        .video-carousel {
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            touch-action: pan-y;
+        }
+
+        .video-track {
+            display: flex;
+            transition: transform 0.6s ease;
+            will-change: transform;
+        }
+
+        .video-track video {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 600px) {
+            .video-carousel {
+                aspect-ratio: 4 / 3;
+            }
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 40px 60px;
+        }
+
+        .main-content {
+            flex: 3;
+            padding-right: 40px;
+        }
+
+        .main-content h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        .main-content p {
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .sidebar {
+            flex: 1;
+            border-left: 1px solid #ddd;
+            padding-left: 30px;
+        }
+
+        .sidebar h3 {
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        /* Eliminado el contenido de publicaciones recientes */
+
+        .social-bar {
+            position: fixed;
+            top: 40%;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .social-bar a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: #000;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+        /* Estilos para los contadores */
+        section {
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+            gap: 20px;
+            flex-wrap: nowrap;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        section>div {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: default;
+        }
+
+        section>div:nth-child(1) {
+            background-color: #0077cc;
+            /* azul */
+            flex: 0 0 28%;
+        }
+
+        section>div:nth-child(2) {
+            background-color: #003366;
+            /* azul oscuro */
+            flex: 0 0 40%;
+            /* más ancho */
+        }
+
+        section>div:nth-child(3) {
+            background-color: #0055a5;
+            /* otro tono de azul */
+            flex: 0 0 28%;
+        }
+
+        section svg {
+            margin-bottom: 15px;
+            fill: white !important;
+            /* que los íconos sean blancos para contraste */
+            width: 50px;
+            height: 50px;
+        }
+
+        .counter {
+            font-size: 48px;
+            font-weight: bold;
+            color: white !important;
+            margin-bottom: 8px;
+        }
+
+        section div div {
+            font-size: 16px;
+            color: white !important;
+            font-weight: 600;
+        }
+
+        .counter:nth-child(2) {
+            color: #003366;
+        }
+
+        .counter:nth-child(3) {
+            color: #003366;
+        }
+
+        section div div {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* NUEVOS CUADROS debajo de contadores */
+        .study-links {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin: 20px 60px 60px 60px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fffdfd;
+            padding: 0 80px;
+
+        }
+
+        .study-box {
+            flex: 1 1 90px;
+            height: 200px;
+            color: #003366;
+            font-weight: bold;
+            font-size: 20px;
+            font-family: 'Arial Black', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 0;
+            transition: background-color 0.3s ease;
+            position: relative;
+            padding: 0 10px;
+        }
+
+        .study-box span {
+            z-index: 2;
+            position: relative;
+            line-height: 1.2;
+        }
+
+        .study-box.oferta {
+            background: linear-gradient(135deg, #972516 50%, #b12c1b 50%);
+            color: white;
+        }
+
+        .study-box.admisiones {
+            background: linear-gradient(135deg, #c19e5c 50%, #f6b85c 50%);
+            color: #003366;
+        }
+
+        .study-box.registro {
+            background: linear-gradient(135deg, #972516 50%, #b12c1b 50%);
+            color: white;
+        }
+
+        .study-box.preguntas {
+            background: linear-gradient(135deg, #c19e5c 50%, #f6b85c 50%);
+            color: #003366;
+        }
+
+        .study-box:hover {
+            filter: brightness(0.85);
+        }
+
+        /* NUEVOS CUADROS DE INFORMACIÓN INSTITUCIONAL */
+        .extra-links {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0;
+            max-width: 1100px;
+            margin: 0 auto 60px auto;
+            padding: 0 80px;
+        }
+
+        .extra-box {
+            background: linear-gradient(135deg, #c19e5c 50%, #f6b85c 50%);
+            color: #003366;
+            font-family: 'Arial Black', Arial, sans-serif;
+            font-weight: bold;
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 220px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .extra-box:nth-child(odd) {
+            background: linear-gradient(135deg, #972516 50%, #b12c1b 50%);
+            /* azul más claro */
+            color: white;
+        }
+
+        .extra-box:hover {
+            filter: brightness(0.85);
+        }
+
+        /* NUEVA SECCIÓN DE BLOGS */
+        .blog-section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .blog-section h2 {
+            color: #003366;
+            font-weight: bold;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .blog-section hr {
+            width: 80px;
+            border: 2px solid #003366;
+            margin-bottom: 20px;
+        }
+
+        .blog-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .blog-main {
+            flex: 2;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-main img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-main h3 {
+            margin: 15px;
+            color: #003366;
+        }
+
+        .blog-main p {
+            margin: 0 15px 10px 15px;
+            color: #555;
+        }
+
+        .blog-main a {
+            display: inline-block;
+            margin: 0 15px 15px 15px;
+            color: #972516;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .blog-main a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blogs laterales */
+        .blog-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .blog-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            color: #fff;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .blog-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .blog-item:hover {
+            filter: brightness(0.9);
+        }
+
+        /* Colores como en tu ejemplo */
+        .blog-item.blue {
+            background-color: #7e1a1ad5;
+        }
+
+        .blog-item.teal {
+            background-color: #cac02c;
+        }
+
+        .blog-item.red {
+            background-color: #203697;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <a href="presentacion.html">
+                <img src="img/Diseño sin título.jpg" alt="Logo Instituto Técnico Francisco Miranda" />
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="inicio.html">Portal ITFM</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sobre_igtfm.html">Sobre el ITFM</a></li>
+                        <li><a href="clases.html">Clases</a></li>
+                        <li><a href="talleres.html">Talleres</a></li>
+                        <li><a href="banda_musical.html">Banda Musical</a></li>
+                        <li><a href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </li>
+                <li><a href="oferta_academica.html">Oferta académica</a></li>
+                <li><a href="personal.html">Autoridades Institucionales</a></li>
+                <li><a href="estudiantes.html">Estudiantes</a></li>
+                <li><a href="inscripcion.html">Inscripción</a></li>
+                <li><a href="comentarios.html">Comentarios</a></li>
+                <li><a href="compras.html">Compras</a></li>
+                <div class="cart-container" onclick="addToCart()">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Carrusel de videos -->
+    <div class="video-carousel" id="videoCarousel">
+        <div class="video-track">
+            <video src="img/slider1.mp4" autoplay muted loop></video>
+            <video src="img/slider2.mp4" autoplay muted loop></video>
+            <video src="img/slider1.mp4" autoplay muted loop></video>
+            <video src="img/slider2.mp4" autoplay muted loop></video>
+        </div>
+    </div>
+
+    <!-- Contadores animados con íconos -->
+    <section>
+        <div>
+            <!-- Sol -->
+            <svg width="40" height="40" fill="#0077cc" viewBox="0 0 24 24">
+                <path
+                    d="M12 4a1 1 0 011-1V1a1 1 0 10-2 0v2a1 1 0 011 1zm6.36 1.64a1 1 0 011.41 0l1.42 1.42a1 1 0 01-1.41 1.41L18.36 7.05a1 1 0 010-1.41zM20 11h2a1 1 0 110 2h-2a1 1 0 110-2zm-1.64 6.36a1 1 0 011.41 1.41l-1.42 1.42a1 1 0 11-1.41-1.41l1.42-1.42zM13 20v2a1 1 0 11-2 0v-2a1 1 0 112 0zm-6.36-1.64a1 1 0 010 1.41L5.22 21.2a1 1 0 11-1.41-1.41l1.42-1.42a1 1 0 011.41 0zM4 13H2a1 1 0 110-2h2a1 1 0 110 2zm1.64-6.36a1 1 0 00-1.41-1.41L2.81 6.64a1 1 0 101.41 1.41L5.64 6.64zM12 6a6 6 0 100 12 6 6 0 000-12z" />
+            </svg>
+            <div class="counter" data-target="150" style="color: #022842;">0</div>
+            <div style="font-size: 14px; color: #555;">PROGRAMAS DE ESTUDIO al 2025</div>
+        </div>
+
+        <div>
+            <!-- Libreta -->
+            <svg width="40" height="40" fill="#003366" viewBox="0 0 24 24">
+                <path
+                    d="M7 2a1 1 0 00-1 1v1H5a2 2 0 00-2 2v13a2 2 0 002 2h14a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H8V3a1 1 0 00-1-1zm0 4v1a1 1 0 102 0V6h6v1a1 1 0 102 0V6h1v13H5V6h1zm3 4h6a1 1 0 010 2h-6a1 1 0 010-2zm0 4h6a1 1 0 010 2h-6a1 1 0 010-2z" />
+            </svg>
+            <div class="counter" data-target="800" style="color: #003366;">0</div>
+            <div style="font-size: 14px; color: #555;">ALUMNOS MATRICULADOS ACTUALES</div>
+        </div>
+
+        <div>
+            <!-- Libro -->
+            <svg width="40" height="40" fill="#003366" viewBox="0 0 24 24">
+                <path
+                    d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 9.75L4.21 9 12 5.25 19.79 9 12 12.75zm-6 1.5v2.25c0 1.64 2.69 3 6 3s6-1.36 6-3V14.25l-6 3.27-6-3.27z" />
+            </svg>
+            </svg>
+            <div class="counter" data-target="1200" style="color: #003366;">0</div>
+            <div style="font-size: 14px; color: #555;">ALUMNOS GRADUADOS</div>
+        </div>
+    </section>
+
+    <!-- CUADROS DE ENLACES DE ESTUDIO -->
+    <div>
+        <h2 style="text-align: center; margin: 20px 0 10px 0; color: #003366; 
+           font-family: Arial, sans-serif; font-weight: bold; text-transform: uppercase;">
+            ¡ESTUDIA EN EL IGTFM!
+        </h2>
+        <hr style="width: 60px; border: 2px solid #003366; margin: 10px auto 10px auto;">
+
+        <section class="study-links" style="margin: 0 auto 40px auto;">
+
+            <a href="oferta_academica.html" class="study-box oferta">
+                <span>Oferta<br>Académica</span>
+            </a>
+            <a href="estudiantes.html" class="study-box admisiones">
+                <span>Estudiantes</span>
+            </a>
+            <a href="inscripcion.html" class="study-box registro">
+                <span>Inscripción</span>
+            </a>
+            <a href="comentarios.html" class="study-box preguntas">
+                <span>Comentarios <br>Frecuentes</span>
+            </a>
+        </section>
+    </div>
+    <!-- NUEVOS CUADROS DE INFORMACIÓN -->
+    <div>
+        <h2 style="text-align: center; margin: 40px 0 10px 0; color: #003366; 
+               font-family: Arial, sans-serif; font-weight: bold; text-transform: uppercase;">
+            Información Institucional
+        </h2>
+        <hr style="width: 60px; border: 2px solid #003366; margin: 10px auto 10px auto;">
+
+        <section class="extra-links" style="margin: 0 auto 40px auto;">
+            <a href="sobre_igtfm.html" class="extra-box">Antecedentes Institucionales</a>
+            <a href="talleres.html" class="extra-box">Talleres técnicos Institucionales</a>
+            <a href="personal.html" class="extra-box">Autoridades Institucionales</a>
+            <a href="estudiantes.html" class="extra-box">Reglamento Interno Estudiantil</a>
+        </section>
+    </div>
+    <!-- SECCIÓN BLOG -->
+    <div class="blog-section">
+        <h2>Artículos del blog</h2>
+        <hr>
+
+        <div class="blog-container">
+
+            <!-- Blog grande a la izquierda -->
+            <div class="blog-main">
+                <img src="img/agro,universidad.jpg" alt="Blog principal">
+                <h3>El IGTFM y su compromiso con la agroindustria</h3>
+                <p>Los jóvenes del bachillerato en Agroindustria del Instituto Técnico Francisco Miranda han iniciado su
+                    etapa de pasantía profesional en distintas áreas agrícolas de la región.</p>
+            </div>
+
+            <!-- Blogs pequeños a la derecha -->
+            <div class="blog-side">
+                <div class="blog-item blue">
+                    <img src="img/catedra.jpg" alt="Blog 2">
+                    <p>Jóvenes de último de bachillerato participan en cátedra Morazánica</p>
+
+                </div>
+                <div class="blog-item teal">
+                    <img src="img/bandacompe.jpg" alt="Blog 3">
+                    <p>IGTFM reconoce con Galardón al Mérito a estudiantes próximos a egresar</p>
+                </div>
+                <div class="blog-item red">
+                    <img src="img/futbolMujeres.jpg" alt="Blog 4">
+                    <p>IGTFM Cortés culminará Comedor, Estancia Infantil y Coworking este octubre</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <!-- Barra social -->
+    <div class="social-bar">
+        <a href="https://www.facebook.com/InstitutoTecnicoFranciscoMiranda" title="Facebook">f</a>
+        <a href="https://twitter.com/InstitutoFranciscoMiranda" title="X">X</a>
+        <a href="https://www.instagram.com/InstitutoFranciscoMiranda" title="Instagram">📷</a>
+        <a href="https://www.youtube.com/InstitutoFranciscoMiranda" title="YouTube">▶</a>
+        <a href="https://www.tiktok.com/@InstitutoFranciscoMiranda" title="TikTok">🎵</a>
+    </div>
+
+    <!-- Imagen de pie de página -->
+    <img src="img/pie de pagina.png" alt="" style="width: 100%">
+
+    <!-- Pie de página -->
+    <footer>
+        &copy; 2025 Instituto Técnico Francisco Miranda. Todos los derechos reservados.
+
+    </footer>
+
+    <script>
+        // Contadores animados
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / 200;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+
+        // Función carrito (ejemplo simple)
+        let cartCount = 0;
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+        }
+    </script>
+
+</body>
+
+</html>

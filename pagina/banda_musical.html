@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Instituto Técnico Francisco Miranda</title>
+    <style>
+        /* Responsividad del encabezado */
+        @media (max-width: 992px) {
+            header {
+                padding: 10px 30px;
+            }
+
+            .logo img {
+                height: 60px;
+                /* Logo más pequeño */
+            }
+
+            nav ul {
+                gap: 10px;
+            }
+
+            nav a {
+                font-size: 14px;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-wrap: wrap;
+                /* Para que no se rompa si falta espacio */
+                justify-content: space-between;
+            }
+
+            .logo img {
+                height: 50px;
+            }
+
+            nav ul {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+
+            nav a {
+                font-size: 13px;
+                padding: 6px 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo img {
+                height: 45px;
+            }
+
+            nav a {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+
+            .cart-container {
+                margin-left: 10px;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fffdfd;
+        }
+
+        /* Estilos para el encabezado */
+        header {
+            background-color: #d5d6da;
+            padding: 0px 60px;
+            /* MÁS DELGADO */
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 80px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 15px;
+        }
+
+        nav li {
+            position: relative;
+        }
+
+        nav a {
+            color: rgb(0, 0, 0);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            cursor: pointer;
+        }
+
+        nav a:hover {
+            background-color: orange;
+            color: white;
+        }
+
+        /* Menú desplegable */
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #5a5a5a;
+            min-width: 180px;
+            padding: 10px 0;
+            border-radius: 5px;
+            z-index: 20;
+        }
+
+        .dropdown-menu li {
+            padding: 8px 20px;
+        }
+
+        .dropdown-menu li a {
+            color: white;
+            font-size: 14px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-menu li a:hover {
+            background-color: #003366;
+        }
+
+        /* Carrito de compras */
+        .cart-container {
+            position: relative;
+            margin-left: 20px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: red;
+            color: white;
+            font-size: 12px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 18px;
+            font-weight: bold;
+            pointer-events: none;
+        }
+
+
+        /* iconos de apps */
+
+        .social-bar {
+            position: fixed;
+            top: 40%;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .social-bar a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 35px;
+            height: 35px;
+            background-color: #000;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 5px 0 0 5px;
+        }
+
+        footer {
+            background-color: #ffffff;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+            margin-top: 40px;
+        }
+
+
+        /* NUEVA SECCIÓN DE BLOGS */
+        .blog-section {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .blog-section h2 {
+            color: #003366;
+            font-weight: bold;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .blog-section hr {
+            width: 80px;
+            border: 2px solid #003366;
+            margin-bottom: 20px;
+        }
+
+        .blog-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .blog-main {
+            flex: 2;
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .blog-main img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .blog-main h3 {
+            margin: 15px;
+            color: #003366;
+        }
+
+        .blog-main p {
+            margin: 0 15px 10px 15px;
+            color: #555;
+        }
+
+        .blog-main a {
+            display: inline-block;
+            margin: 0 15px 15px 15px;
+            color: #972516;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .blog-main a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blogs laterales */
+        .blog-side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .blog-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            color: #fff;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: filter 0.3s ease;
+        }
+
+        .blog-item img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+        }
+
+        .blog-item:hover {
+            filter: brightness(0.9);
+        }
+
+        /* Colores como en tu ejemplo */
+        .blog-item.blue {
+            background-color: #7e1a1ad5;
+        }
+
+        .blog-item.teal {
+            background-color: #cac02c;
+        }
+
+        .blog-item.red {
+            background-color: #203697;
+        }
+
+        /* Banner Azul Oferta Académica */
+        .banner-oferta {
+            background-color: #1f3667;
+            /* Azul oscuro similar al de UNAH */
+            padding: 30px 60px;
+            border-bottom: 3px solid #f2c200;
+            /* Línea amarilla inferior */
+            color: white;
+        }
+
+        .banner-oferta p {
+            margin: 0;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        .banner-oferta h1 {
+            margin: 5px 0 0 0;
+            font-size: 26px;
+            font-weight: bold;
+            color: #f2c200;
+            /* Amarillo */
+        }
+
+        .antecedentes {
+            text-align: center;
+            margin: 40px auto;
+            max-width: 1000px;
+        }
+
+        .antecedentes h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #002b5c;
+            position: relative;
+        }
+
+        .accordion {
+            text-align: left;
+        }
+
+        .accordion-item {
+            border: 1px solid #002b5c;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background-color: #fff;
+            color: #002b5c;
+            font-size: 16px;
+            font-weight: bold;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 18px;
+            position: absolute;
+            right: 20px;
+        }
+
+        .accordion-header.active::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background-color: #f9f9f9;
+            padding: 0 15px;
+        }
+
+        .accordion-content p {
+            margin: 30px 0;
+        }
+
+        /* NUEVOS CUADROS debajo de contadores */
+        .study-links {
+            display: flex;
+            justify-content: center;
+            gap: 0;
+            margin: 20px 60px 60px 60px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #fffdfd;
+            padding: 0 80px;
+
+        }
+
+        .study-box {
+            flex: 1 1 90px;
+            height: 200px;
+            color: #003366;
+            font-weight: bold;
+            font-size: 20px;
+            font-family: 'Arial Black', Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 0;
+            transition: background-color 0.3s ease;
+            position: relative;
+            padding: 0 10px;
+        }
+
+        .study-box span {
+            z-index: 2;
+            position: relative;
+            line-height: 1.2;
+        }
+
+        .study-box.oferta {
+            background: linear-gradient(135deg, #972516 50%, #b12c1b 50%);
+            color: white;
+        }
+
+        .study-box.admisiones {
+            background: linear-gradient(135deg, #c19e5c 50%, #f6b85c 50%);
+            color: #003366;
+        }
+
+        .study-box.registro {
+            background: linear-gradient(135deg, #972516 50%, #b12c1b 50%);
+            color: white;
+        }
+
+        .study-box.preguntas {
+            background: linear-gradient(135deg, #c19e5c 50%, #f6b85c 50%);
+            color: #003366;
+        }
+
+        .study-box:hover {
+            filter: brightness(0.85);
+        }
+
+        .personal {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .personal h2 {
+            font-size: 28px;
+            color: #002b5c;
+            margin-bottom: 30px;
+        }
+
+        .cargo {
+            margin-bottom: 40px;
+            text-align: left;
+        }
+
+        .cargo h3 {
+            font-size: 22px;
+            color: #972516;
+            margin-bottom: 20px;
+            border-left: 5px solid #002b5c;
+            padding-left: 10px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            flex: 1 1 220px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .card h4 {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #003366;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .personal {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .personal h2 {
+            font-size: 28px;
+            color: #002b5c;
+            margin-bottom: 30px;
+        }
+
+        /* Estilos acordeón */
+        .accordion-item {
+            border: 1px solid #002b5c;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            background-color: #fff;
+            color: #002b5c;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 15px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+        }
+
+        .accordion-header::after {
+            content: '+';
+            font-size: 18px;
+            position: absolute;
+            right: 20px;
+            transition: transform 0.3s;
+        }
+
+        .accordion-header.active::after {
+            content: '-';
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.3s ease;
+            background-color: #f9f9f9;
+            padding: 0 15px;
+        }
+
+        .accordion-content.open {
+            padding: 15px;
+        }
+
+        /* Cards */
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            flex: 1 1 220px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .card h4 {
+            font-size: 18px;
+            margin: 10px 0 5px;
+            color: #003366;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Video */
+        .video-banda {
+            margin-top: 40px;
+        }
+
+        .video-banda h3 {
+            margin-bottom: 15px;
+            color: #972516;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <div class="logo">
+            <a href="presentacion.html">
+                <img src="img/Diseño sin título.jpg" alt="Logo Instituto Técnico Francisco Miranda" />
+            </a>
+        </div>
+
+        <nav>
+            <ul>
+                <li class="dropdown">
+                    <a href="inicio.html">Portal ITFM</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="sobre_igtfm.html">Sobre el ITFM</a></li>
+                        <li><a href="clases.html">Clases</a></li>
+                        <li><a href="talleres.html">Talleres</a></li>
+                        <li><a href="banda_musical.html">Banda Musical</a></li>
+                        <li><a href="ubicacion.html">Ubicación</a></li>
+                    </ul>
+                </li>
+                <li><a href="oferta_academica.html">Oferta académica</a></li>
+                <li><a href="personal.html">Autoridades Institucionales</a></li>
+                <li><a href="estudiantes.html">Estudiantes</a></li>
+                <li><a href="inscripcion.html">Inscripción</a></li>
+                <li><a href="comentarios.html">Comentarios</a></li>
+                <li><a href="compras.html">Compras</a></li>
+                <div class="cart-container" onclick="addToCart()">
+                    <span class="cart-icon">🛒</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </div>
+            </ul>
+        </nav>
+    </header>
+    <!-- SECCIÓN AZUL DE TÍTULO -->
+    <div class="banner-oferta">
+        <div class="banner-content">
+            <p>Portal ITFM /</p>
+            <h1>BANDA MUSICAL</h1>
+        </div>
+    </div>
+    <!-- SECCIÓN DE PERSONAL -->
+    <section class="personal">
+        <h2>Historia Recorrida de la Banda</h2>
+
+        <!-- Dirección -->
+        <div class="accordion-item">
+            <button class="accordion-header">Historia de la Banda</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <img src="img/logo de la banda.jpg" alt="Historia Musical">
+                        <h4>Banda Latina Francisco Miranda</h4>
+                        <p>La Banda Latina del Instituto Técnico Francisco Miranda es un claro ejemplo del talento
+                            artístico, la dedicación y la disciplina musical que caracteriza a nuestros estudiantes.
+                            Esta agrupación,
+                            conformada por jóvenes comprometidos con la excelencia musical, ha logrado destacarse tanto
+                            a nivel local como
+                            nacional.
+                        </p>
+                        <p>A lo largo del año, la Banda Latina participa activamente en una variedad de eventos
+                            culturales, tales
+                            como ferias escolares, celebraciones patrias y actos conmemorativos, donde representa con
+                            orgullo el
+                            espíritu del Instituto. Además, es protagonista en desfiles cívicos y festividades
+                            municipales,
+                            demostrando su calidad interpretativa y su impecable presencia escénica.</p>
+                        <p>Su participación en competencias a nivel regional y nacional ha sido motivo de orgullo para
+                            toda la
+                            comunidad educativa, logrando reconocimientos por su creatividad, coordinación y nivel
+                            técnico. Estos
+                            logros son fruto de un trabajo constante, del esfuerzo conjunto entre estudiantes, docentes
+                            y
+                            directivos, y de una pasión compartida por la música.</p>
+                        <p>La Banda Latina no solo es un espacio para el desarrollo musical, sino también un medio para
+                            fomentar
+                            valores como la responsabilidad, el trabajo en equipo y la perseverancia entre sus
+                            integrantes. Cada
+                            ensayo y presentación es una oportunidad para crecer tanto artística como personalmente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-header">Secciones Disponibles</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <h4>Secciones de la Banda</h4>
+                        <p>La Banda Latina del Instituto Técnico Francisco Miranda está compuesta por diversas secciones
+                            instrumentales,
+                            cada una con un papel fundamental en la creación de un sonido armonioso y vibrante. A
+                            continuación,
+                            se detallan
+                            las principales secciones que conforman esta destacada agrupación musical:</p>
+                        <ul>
+                            <li>Instrumentos de Viento: Esta sección incluye instrumentos como
+                                saxofones (alto, tenor y soprano),
+                                trompetas, trombones, tubas y fliscornos. Los instrumentos de viento son esenciales para
+                                aportar melodía,
+                                armonía y potencia al conjunto musical.</li>
+                            <li>Instrumentos de Percusión: La sección de percusión está compuesta por
+                                instrumentos como
+                                bombos, timbales, platillos y cajas. Estos instrumentos son fundamentales para marcar el
+                                ritmo y la
+                                energía de las interpretaciones musicales.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instrumentos de Viento -->
+        <div class="accordion-item">
+            <button class="accordion-header">Instrumentos de Viento</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <img src="img/saxalto.jpg" alt="consejero">
+                        <h4>Saxofón Alto</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/saxsoprano.webp" alt="consejero">
+                        <h4>Saxofón Soprano</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/saxtenor.jpg" alt="consejero">
+                        <h4>Saxofón Tenor</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/trompeta.webp" alt="consejero">
+                        <h4>Trompeta</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/trombon.jpg" alt="consejero">
+                        <h4>Trombón</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/tuba.png" alt="consejero">
+                        <h4>Tuba</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/fliscorno.jpg" alt="consejero">
+                        <h4>Fliscorno</h4>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Instrumentos de Percusión -->
+        <div class="accordion-item">
+            <button class="accordion-header">Instrumentos de Percusión</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <img src="img/bombo.jpg" alt="consejero">
+                        <h4>Bombo Tonales</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/cajaseca.jpg" alt="consejero">
+                        <h4>Caja Seca</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/congas.webp" alt="consejero">
+                        <h4>Congas</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/multi.webp" alt="consejero">
+                        <h4>Multí Tenor</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/platillos.webp" alt="consejero">
+                        <h4>Platillos</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/timbales.webp" alt="consejero">
+                        <h4>Timbales</h4>
+                    </div>
+                    <div class="card">
+                        <img src="img/tambor de punta.webp" alt="consejero">
+                        <h4>Tambor de Punta</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <button class="accordion-header">Requisitos de La Banda Musical</button>
+            <div class="accordion-content">
+                <div class="card-container">
+                    <div class="card">
+                        <h4>Requisitos para unirse a la Banda</h4>
+                        <p>Para formar parte de la Banda Musical del Instituto Técnico Francisco Miranda, los
+                            estudiantes
+                            deben
+                            cumplir con los siguientes requisitos:</p>
+                        <ul>
+                            <li>Ser estudiante activo del Instituto Técnico Francisco Miranda.</li>
+                            <li>Contar con actitud positiva, compromiso y responsabilidad.</li>
+                            <li>Disponibilidad para ensayos entre semana y fines de semana si es necesario.</li>
+                            <li>Presentar audición básica para evaluar ritmo o técnica musical.</li>
+                            <li>Seguir el reglamento interno de la banda musical.</li>
+                            <li>Participar en eventos y actividades organizadas por la banda.</li>
+                        </ul>
+                        <p>La Banda Musical del Instituto Técnico Francisco Miranda es una oportunidad única para que
+                            los
+                            estudiantes desarrollen sus habilidades musicales, trabajen en equipo y representen con
+                            orgullo
+                            a
+                            su institución en diversos eventos culturales y sociales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section>
+
+
+
+    <!-- SECCIÓN BLOG -->
+    <div class="blog-section">
+        <h2>Artículos del blog</h2>
+        <hr>
+
+        <div class="blog-container">
+
+            <!-- Blog grande a la izquierda -->
+            <div class="blog-main">
+                <img src="img/agro,universidad.jpg" alt="Blog principal">
+                <h3>El IGTFM y su compromiso con la agroindustria</h3>
+                <p>Los jóvenes del bachillerato en Agroindustria del Instituto Técnico Francisco Miranda han iniciado su
+                    etapa de pasantía profesional en distintas áreas agrícolas de la región.</p>
+            </div>
+
+            <!-- Blogs pequeños a la derecha -->
+            <div class="blog-side">
+                <div class="blog-item blue">
+                    <img src="img/catedra.jpg" alt="Blog 2">
+                    <p>Jóvenes de último de bachillerato participan en cátedra Morazánica</p>
+
+                </div>
+                <div class="blog-item teal">
+                    <img src="img/bandacompe.jpg" alt="Blog 3">
+                    <p>IGTFM reconoce con Galardón al Mérito a estudiantes próximos a egresar</p>
+                </div>
+                <div class="blog-item red">
+                    <img src="img/futbolMujeres.jpg" alt="Blog 4">
+                    <p>IGTFM Cortés culminará Comedor, Estancia Infantil y Coworking este octubre</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Barra social -->
+    <div class="social-bar">
+        <a href="https://www.facebook.com/profile.php?id=100063205420573" title="Facebook">🐵</a>
+        <a href="https://www.facebook.com/InstitutoTecnicoFranciscoMiranda" title="Facebook">f</a>
+        <a href="https://twitter.com/InstitutoFranciscoMiranda" title="X">X</a>
+        <a href="https://www.instagram.com/InstitutoFranciscoMiranda" title="Instagram">📷</a>
+        <a href="https://www.youtube.com/InstitutoFranciscoMiranda" title="YouTube">▶</a>
+        <a href="https://www.tiktok.com/@InstitutoFranciscoMiranda" title="TikTok">🎵</a>
+    </div>
+
+    <!-- Imagen de pie de página -->
+    <img src="img/pie de pagina.png" alt="" style="width: 100%">
+
+    <!-- Pie de página -->
+    <footer>
+        &copy; 2025 Instituto Técnico Francisco Miranda. Todos los derechos reservados.
+
+    </footer>
+
+    <script>
+        // Contadores animados
+        const counters = document.querySelectorAll('.counter');
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / 200;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 10);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        });
+
+        // Función carrito (ejemplo simple)
+        let cartCount = 0;
+        function addToCart() {
+            cartCount++;
+            document.getElementById('cartCount').innerText = cartCount;
+        }
+        // Script acordeón
+        document.querySelectorAll(".accordion-header").forEach(button => {
+            button.addEventListener("click", () => {
+                const accordionContent = button.nextElementSibling;
+
+                button.classList.toggle("active");
+
+                if (button.classList.contains("active")) {
+                    accordionContent.style.maxHeight = accordionContent.scrollHeight + "px";
+                    accordionContent.style.padding = "15px";
+                } else {
+                    accordionContent.style.maxHeight = "0";
+                    accordionContent.style.padding = "0 15px";
+                }
+            });
+        });
+
+
+    </script>
+
+</body>
+
+</html>
